@@ -117,7 +117,7 @@ Rocket classes ("Falcon 9 class" and so on), part prices, science points and eve
 
 ## Credits
 
-- Built for NASA Space Apps 2026 by **<team name>**.
+- Built for NASA Space Apps 2026 by **<Delta Orbitals>**.
 - AI tools used: Claude (Anthropic) wrote and tested the code and balance, and drafted this README.
 - Fonts: DejaVu Sans Mono (Bitstream Vera license) and Poppins (SIL Open Font License); license files are in `assets/fonts/`.
 - Not affiliated with or endorsed by NASA.
