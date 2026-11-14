@@ -13,6 +13,19 @@ from scenes import ui
 from scenes.app import App, DEMO_SEED
 
 
+def fit_browser_canvas():
+    """In the browser, ask the page to size the canvas to 16:9. pygbag measures
+    the canvas when the page loads, before set_mode() has made it 1280x720,
+    which leaves it stretched into a square until the window is resized."""
+    if sys.platform != "emscripten":
+        return
+    try:
+        import platform  # pygbag's browser bridge
+        platform.window.window_resize()
+    except Exception:
+        pass
+
+
 TOUCH_MOUSE = (pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP, pygame.MOUSEMOTION)
 
 
@@ -45,7 +58,12 @@ async def main():
     screen = pygame.display.set_mode((ui.W, ui.H), flags)
     clock = pygame.time.Clock()
     app = App(screen)
+    fit_browser_canvas()
+    frame = 0
     while app.running:
+        frame += 1
+        if frame in (20, 90):  # again, in case the page's own resize landed after ours
+            fit_browser_canvas()
         dt = min(clock.tick(60) / 1000.0, 0.05)
         events = []
         for raw in pygame.event.get():
