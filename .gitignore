@@ -1,0 +1,7 @@
+build/
+__pycache__/
+.pytest_cache/
+*.pyc
+mission_patch_*.png
+mission_report_*.txt
+snapshots/
