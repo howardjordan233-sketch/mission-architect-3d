@@ -22,7 +22,7 @@ class Scene:
         self.msg, self.msg_t, self.msg_color = msg, secs, color
 
     def mouse(self):
-        return pygame.mouse.get_pos()
+        return self.app.mouse_pos
 
     def handle(self, e):
         if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:

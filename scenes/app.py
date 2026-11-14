@@ -30,6 +30,7 @@ class App:
         self.screen = screen
         self.stars = ui.Starfield()
         self.running = True
+        self.mouse_pos = (-1, -1)  # updated from mouse and touch events in main.py
         self.scene = None
         self.s = {
             "difficulty": "engineer",

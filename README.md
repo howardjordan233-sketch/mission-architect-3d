@@ -4,7 +4,7 @@
 
 A 3D browser game for **NASA Space Apps 2026, Challenge 13 (Space Mission Design Game)**. You pick a destination and an orbit, then build a spacecraft part by part on a launch pad. Every part costs money, adds mass and draws power. Launch it, watch the mission play out, then compare your design with the real NASA mission that went there.
 
-**Play now (no install):** `https://<your-username>.github.io/mission-architect-3d/`
+**Play now (no install):** **https://howardjordan233-sketch.github.io/mission-architect-3d/**
 
 Written in **100% Python** with pygame-ce. It runs in the browser through [pygbag](https://github.com/pygame-web/pygbag), which compiles Python to WebAssembly. The 3D is drawn by a small renderer written in plain Python, with no 3D library.
 
@@ -52,7 +52,7 @@ Written in **100% Python** with pygame-ce. It runs in the browser through [pygba
 
 ## Run it
 
-**In the browser:** open the link above. The first load downloads the Python runtime (a few seconds), and after that it runs offline.
+**In the browser:** open the link above. The first load downloads the Python runtime (a few seconds). If the page says *Ready for launch*, click or tap once to start. Mouse, keyboard and touch screens all work.
 
 **On a computer (Python 3.10 or newer):**
 
@@ -100,7 +100,7 @@ tools/snapshots.py renders every screen to PNG without a window
 
 **The golden rule:** nothing in `game/` imports pygame, and nothing in `scenes/` holds game rules. A test enforces it. That's why the rules can be tested in a terminal while the same files run in the browser.
 
-**Tests:** `python -m pytest`, 59 tests. They include the 150 W / 200 W power example, a check that every 3D face points outward, a check that a challenge code reproduces the exact score, and 18 full rounds clicked through with real mouse events (every mission, level and team size).
+**Tests:** `python -m pytest`, 60 tests. They include the 150 W / 200 W power example, a check that every 3D face points outward, a check that a challenge code reproduces the exact score, and 18 full rounds clicked through with real mouse events (every mission, level and team size).
 
 **Browser rules we follow:** an async main loop with nothing after `asyncio.run(main())`; no files written in the browser (the leaderboard uses `localStorage`, and patches and reports download through pygbag); standard library plus pygame-ce only; Python 3.12 syntax, because that's the runtime pygbag ships.
 

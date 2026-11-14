@@ -192,3 +192,32 @@ def test_pitch_demo_is_identical_every_time(screen):
             app.go("debrief")
             totals.append((app.s["score"]["total"], app.s["score"]["stars"]))
         assert totals == [(66, 3), (93, 5)], totals
+
+
+def test_touch_taps_work(screen):
+    """A tap arrives as finger events plus touch-made mouse events with a stale position.
+    The game must act on the finger position and ignore the stale mouse events."""
+    import importlib.util
+    import pathlib
+    spec = importlib.util.spec_from_file_location(
+        "ma3d_main_mod", pathlib.Path(__file__).resolve().parent.parent / "main.py")
+    src = spec.loader.get_source("ma3d_main_mod").replace("asyncio.run(main())", "")
+    mod = {"__name__": "ma3d_main_mod"}
+    exec(compile(src, "main.py", "exec"), mod)
+    storage.clear()
+    app = App(screen)
+    start = next(b for b in app.scene.buttons if b.label.startswith("START MISSION"))
+    x, y = start.rect.center
+    raw = [
+        pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(0, 0), touch=True),
+        pygame.event.Event(pygame.FINGERDOWN, x=x / ui.W, y=y / ui.H, dx=0, dy=0,
+                           touch_id=0, finger_id=0, pressure=1.0),
+        pygame.event.Event(pygame.FINGERUP, x=x / ui.W, y=y / ui.H, dx=0, dy=0,
+                           touch_id=0, finger_id=0, pressure=0.0),
+        pygame.event.Event(pygame.MOUSEBUTTONUP, button=1, pos=(0, 0), touch=True),
+    ]
+    for r in raw:
+        for e in mod["translate"](r, app):
+            app.scene.handle(e)
+    assert type(app.scene).__name__ == "HangarScene"
+    assert app.mouse_pos == (int(x / ui.W * ui.W), int(y / ui.H * ui.H))
